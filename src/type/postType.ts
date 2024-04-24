@@ -1,5 +1,5 @@
-export type PostType = {
-  _id?: string;
+type PostDataType = {
+  _id?: object | string;
   name: string;
   image?: string;
   content: string;
@@ -9,3 +9,5 @@ export type PostType = {
   type?: string;
   tags?: string[];
 };
+
+export type PostType = PostDataType | null;
