@@ -8,62 +8,71 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Post = require("../models/postModel");
-const responseHandler = require("../utils/responseHandler");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const postModel_1 = __importDefault(require("../models/postModel"));
+const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 const PostApi = {
     getPosts: (res) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield Post.find();
-        responseHandler({ res, code: 200, data });
+        const data = yield postModel_1.default.find();
+        (0, responseHandler_1.default)({ res, code: 200, data });
     }),
     addPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { name, content } = req.body || {};
-            const data = yield Post.create({
-                name,
-                content,
+            const data = yield postModel_1.default.create({
+                name: name.trim(),
+                content: content.trim(),
             });
-            responseHandler({ res, code: 200, data });
+            (0, responseHandler_1.default)({ res, code: 200, data });
         }
         catch (error) {
-            responseHandler({ res, code: 400, error });
+            (0, responseHandler_1.default)({ res, code: 400, error });
         }
     }),
     deletePosts: (res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            yield Post.deleteMany({});
-            responseHandler({ res, code: 200, data: [] });
+            yield postModel_1.default.deleteMany({});
+            (0, responseHandler_1.default)({ res, code: 200, data: [] });
         }
         catch (_a) {
-            responseHandler({ res, code: 500 });
+            (0, responseHandler_1.default)({ res, code: 500 });
         }
     }),
     deletePost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { id } = req.params || {};
-            yield Post.findByIdAndDelete(id);
-            responseHandler({ res, code: 200 });
+            const { id } = req.params;
+            if (id) {
+                yield postModel_1.default.findByIdAndDelete(id);
+                (0, responseHandler_1.default)({ res, code: 200 });
+            }
+            else {
+                (0, responseHandler_1.default)({ res, code: 400 });
+            }
         }
         catch (_b) {
-            responseHandler({ res, code: 400 });
+            (0, responseHandler_1.default)({ res, code: 400 });
         }
     }),
     updatePost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { id } = req.params || {};
-            const { content } = req.body || {};
-            if (content && id) {
-                const data = yield Post.findByIdAndUpdate(id, {
-                    $set: { content },
+            const { id } = req.params;
+            const { content } = req.body;
+            if (content.trim() && id) {
+                const data = yield postModel_1.default.findByIdAndUpdate(id, {
+                    $set: { content: content.trim() },
                 });
-                responseHandler({ res, code: 200, data });
+                (0, responseHandler_1.default)({ res, code: 200, data });
             }
             else {
-                responseHandler({ res, code: 400 });
+                (0, responseHandler_1.default)({ res, code: 400 });
             }
         }
         catch (_c) {
-            responseHandler({ res, code: 400 });
+            (0, responseHandler_1.default)({ res, code: 400 });
         }
     }),
 };
-module.exports = PostApi;
+exports.default = PostApi;

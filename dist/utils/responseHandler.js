@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const codeMessageEnum = Object.freeze({
     400: "欄位未填寫正確，或無此 id",
     500: "伺服器錯誤",
@@ -12,4 +13,4 @@ const responseHandler = ({ res, code, data, error }) => {
         error,
     });
 };
-module.exports = responseHandler;
+exports.default = responseHandler;
