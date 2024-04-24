@@ -1,6 +1,10 @@
 "use strict";
-const mongoose = require("mongoose");
-const postSchema = new mongoose.Schema({
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const postSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: [true, "貼文姓名未填寫"],
@@ -38,5 +42,5 @@ const postSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false,
 });
-const Post = mongoose.model("Post", postSchema);
-module.exports = Post;
+const Post = mongoose_1.default.model("Post", postSchema);
+exports.default = Post;
