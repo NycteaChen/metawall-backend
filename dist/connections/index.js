@@ -6,7 +6,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({ path: "../../config.env" });
+dotenv_1.default.config({ path: "./config.env" });
 const DB = ((_a = process.env.DATABASE) === null || _a === void 0 ? void 0 : _a.replace("<password>", process.env.DATABASE_PASSWORD || "")) || "";
 mongoose_1.default
     .connect(DB)

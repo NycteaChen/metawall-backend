@@ -1,19 +1,28 @@
 import Post from "../models/postModel";
+require("../models/userModel");
 import responseHandler from "../utils/responseHandler";
 import { PostType } from "../type/postType";
 
 const PostApi = {
-  getPosts: async (res: any) => {
-    const data: PostType[] = await Post.find();
+  getPosts: async (req: any, res: any) => {
+    const timeSort = req.query.timeSort == "asc" ? "createdAt" : "-createdAt";
+    const q = req.query.q ? { content: new RegExp(req.query.q) } : {};
+    const data: PostType[] = await Post.find(q)
+      .populate({
+        path: "user",
+        select: "name photo",
+      })
+      .sort(timeSort);
     responseHandler({ res, code: 200, data });
   },
   addPost: async (req: any, res: any) => {
     try {
-      const { name, content } = req.body || {};
+      const { user, content, image } = req.body || {};
 
       const data: PostType = await Post.create({
-        name: name.trim(),
+        user,
         content: content.trim(),
+        image: image.trim(),
       });
       responseHandler({ res, code: 200, data });
     } catch (error) {

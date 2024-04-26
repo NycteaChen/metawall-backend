@@ -4,7 +4,7 @@ import PostApi from "../controllers/postController";
 const router = express.Router();
 
 router.get("/", function (req, res) {
-  PostApi.getPosts(res);
+  PostApi.getPosts(req, res);
 });
 
 router.post("/", function (req, res) {

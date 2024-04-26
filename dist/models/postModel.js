@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const postSchema = new mongoose_1.default.Schema({
-    name: {
-        type: String,
+    user: {
+        type: mongoose_1.default.Schema.ObjectId,
+        ref: "User",
         required: [true, "貼文姓名未填寫"],
     },
     content: {
@@ -19,7 +20,7 @@ const postSchema = new mongoose_1.default.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
         select: false,
     },
     likes: {
@@ -39,7 +40,6 @@ const postSchema = new mongoose_1.default.Schema({
         default: [],
     },
 }, {
-    timestamps: true,
     versionKey: false,
 });
 const Post = mongoose_1.default.model("Post", postSchema);

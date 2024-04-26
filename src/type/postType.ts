@@ -1,8 +1,8 @@
 type PostDataType = {
-  _id?: object | string;
-  name: string;
-  image?: string;
+  user: object | string;
   content: string;
+  _id?: object | string;
+  image?: string;
   likes?: number;
   comments?: number;
   createdAt?: Date;
