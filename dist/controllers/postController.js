@@ -13,18 +13,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const postModel_1 = __importDefault(require("../models/postModel"));
+require("../models/userModel");
 const responseHandler_1 = __importDefault(require("../utils/responseHandler"));
 const PostApi = {
-    getPosts: (res) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield postModel_1.default.find();
+    getPosts: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const timeSort = req.query.timeSort == "asc" ? "createdAt" : "-createdAt";
+        const q = req.query.q ? { content: new RegExp(req.query.q) } : {};
+        const data = yield postModel_1.default.find(q)
+            .populate({
+            path: "user",
+            select: "name photo",
+        })
+            .sort(timeSort);
         (0, responseHandler_1.default)({ res, code: 200, data });
     }),
     addPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { name, content } = req.body || {};
+            const { user, content, image } = req.body || {};
             const data = yield postModel_1.default.create({
-                name: name.trim(),
+                user,
                 content: content.trim(),
+                image: image.trim(),
             });
             (0, responseHandler_1.default)({ res, code: 200, data });
         }

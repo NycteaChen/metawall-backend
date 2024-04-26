@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
       required: [true, "貼文姓名未填寫"],
     },
     content: {
@@ -16,7 +17,7 @@ const postSchema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
       select: false,
     },
     likes: {
@@ -37,7 +38,6 @@ const postSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
     versionKey: false,
   }
 );

@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const postController_1 = __importDefault(require("../controllers/postController"));
 const router = express_1.default.Router();
 router.get("/", function (req, res) {
-    postController_1.default.getPosts(res);
+    postController_1.default.getPosts(req, res);
 });
 router.post("/", function (req, res) {
     postController_1.default.addPost(req, res);
